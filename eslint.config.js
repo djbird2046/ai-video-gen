@@ -15,6 +15,12 @@ export default [
       parserOptions: {
         project: './tsconfig.json',
         sourceType: 'module'
+      },
+      globals: {
+        console: 'readonly',
+        fetch: 'readonly',
+        crypto: 'readonly',
+        setTimeout: 'readonly'
       }
     },
     plugins: {

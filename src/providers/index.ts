@@ -1,4 +1,5 @@
 import { Provider, ProviderConfig } from '../types';
+
 import { HttpProviderAdapter, ProviderSpec } from './httpProvider';
 
 const providerSpecs: Record<Provider, ProviderSpec> = {

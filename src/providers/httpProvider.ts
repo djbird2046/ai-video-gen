@@ -125,6 +125,21 @@ export function normalizeResponse(rawPayload: unknown): Partial<GenerationResult
 
   const payload = rawPayload as Record<string, unknown>;
   const statusText = (payload.status ?? payload.state ?? payload.phase) as string | undefined;
+  const output = payload.output as Record<string, unknown> | undefined;
+  const videoUrl =
+    typeof payload.video_url === 'string'
+      ? payload.video_url
+      : typeof output?.video_url === 'string'
+        ? output.video_url
+        : undefined;
+  const coverUrl =
+    typeof payload.cover_url === 'string'
+      ? payload.cover_url
+      : typeof payload.thumbnail === 'string'
+        ? payload.thumbnail
+        : typeof payload.preview === 'string'
+          ? payload.preview
+          : undefined;
   const progress =
     (payload.progress as number | undefined) ??
     (payload.percent as number | undefined) ??
@@ -138,13 +153,8 @@ export function normalizeResponse(rawPayload: unknown): Partial<GenerationResult
     status: normalizeStatus(statusText),
     progress: progress !== undefined ? progress / (progress > 1 ? 100 : 1) : undefined,
     etaSeconds: payload.eta_seconds as number | undefined,
-    videoUrl:
-      (payload.video_url as string | undefined) ??
-      (payload.output as Record<string, unknown> | undefined)?.video_url,
-    coverUrl:
-      (payload.cover_url as string | undefined) ??
-      (payload.thumbnail as string | undefined) ??
-      (payload.preview as string | undefined),
+    videoUrl,
+    coverUrl,
     errorMessage: payload.error as string | undefined
   };
 }

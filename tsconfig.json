@@ -12,7 +12,7 @@
     "sourceMap": true,
     "declaration": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "resolveJsonModule": true
   },
   "include": ["src", "examples", "vitest.config.ts", "tsup.config.ts"],
